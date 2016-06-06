@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Make your own airquality model</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Make your own airquality model">
+  <meta name="author" content="Sebastien Viaene">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Make your own airquality model</h1>
+    <h2>A shiny app</h2>
+    <p>Sebastien Viaene<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Context</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The quality of the outside air is vital to public health. Ozone is one of the metrics that influences the quality of the air.</p>
+
+<ul>
+<li>Need active monitoring of ozone</li>
+<li>Need additional weather metrics</li>
+<li>Need to build thrustworthy predictions for ozone levels</li>
+<li>Need public awereness of what influences air quality</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>A shiny web application</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>A simple web application to demonstrate the weather influence on ozone levels:</p>
+
+<p><a href="https://sviaene.shinyapps.io/shiny/">https://sviaene.shinyapps.io/shiny/</a></p>
+
+<ul>
+<li>Data: New York Air Quality Measurements (standard R dataset)</li>
+<li>Possible input: Solar radiation, wind, temperature, month (i.e. seasonal variability)</li>
+<li>Model: A generalized linear model to predict Ozone from the chosen parameters</li>
+<li>Output: Model vs observations plot and average deviation</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Input</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Interactive checkbox to choose which parameters to use in the model</li>
+<li>Update model button to start/update the actual modelling</li>
+</ul>
+
+<div class="row-fluid">
+  <div class="col-sm-4">
+    <form class="well">
+      <div class="form-group shiny-input-container">
+        <div class="checkbox">
+          <label>
+            <input id="Solar.R" type="checkbox" checked="checked"/>
+            <span>Solar radiation</span>
+          </label>
+        </div>
+      </div>
+      <div class="form-group shiny-input-container">
+        <div class="checkbox">
+          <label>
+            <input id="Wind" type="checkbox"/>
+            <span>Wind</span>
+          </label>
+        </div>
+      </div>
+      <div class="form-group shiny-input-container">
+        <div class="checkbox">
+          <label>
+            <input id="Temp" type="checkbox"/>
+            <span>Temperature</span>
+          </label>
+        </div>
+      </div>
+      <div class="form-group shiny-input-container">
+        <div class="checkbox">
+          <label>
+            <input id="Month" type="checkbox"/>
+            <span>Month</span>
+          </label>
+        </div>
+      </div>
+      <button id="update" type="button" class="btn btn-default action-button">Update model</button>
+    </form>
+  </div>
+  <div class="col-sm-8"></div>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h3>Output examples</h3>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:48%;' class='centered'>
+  <p><img src="assets/fig/unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2"></p>
+
+</div>
+<div style='float:right;width:48%;'>
+  <p><img src="assets/fig/unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3"></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Context'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='A shiny web application'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Input'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Output examples'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <script src="shared/shiny.js" type="text/javascript"></script>
+  <script src="shared/slider/js/jquery.slider.min.js"></script>
+  <script src="shared/bootstrap/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="shared/slider/css/jquery.slider.min.css"></link>
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

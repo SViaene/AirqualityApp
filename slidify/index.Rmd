@@ -1,0 +1,116 @@
+---
+title       : Make your own airquality model    
+subtitle    : A shiny app
+author      : Sebastien Viaene
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [shiny]            # {mathjax, quiz, bootstrap, shiny}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## Context
+
+The quality of the outside air is vital to public health. Ozone is one of the metrics that influences the quality of the air.
+
+- Need active monitoring of ozone
+- Need additional weather metrics
+- Need to build thrustworthy predictions for ozone levels
+- Need public awereness of what influences air quality
+
+--- .class #id 
+
+## A shiny web application
+
+A simple web application to demonstrate the weather influence on ozone levels:
+
+https://sviaene.shinyapps.io/shiny/
+
+- Data: New York Air Quality Measurements (standard R dataset)
+- Possible input: Solar radiation, wind, temperature, month (i.e. seasonal variability)
+- Model: A generalized linear model to predict Ozone from the chosen parameters
+- Output: Model vs observations plot and average deviation
+
+--- .class #id 
+
+## Input
+
+- Interactive checkbox to choose which parameters to use in the model
+- Update model button to start/update the actual modelling
+
+```{r opts.label = 'shiny', echo=FALSE}
+slidifyUI(
+  sidebarPanel(
+          checkboxInput('Solar.R', 'Solar radiation', TRUE),
+          checkboxInput('Wind', 'Wind', FALSE),
+          checkboxInput('Temp', 'Temperature', FALSE),
+          checkboxInput('Month', 'Month', FALSE),
+          
+          actionButton("update", "Update model")
+  ),
+  mainPanel(
+  )
+)
+
+```
+
+--- &twocol w1:50% w2:50%
+### Output examples
+*** =left
+
+```{r echo=FALSE}
+
+library(datasets)
+airData <- airquality[complete.cases(airquality),]
+modelData <- data.frame(airData$Ozone)
+names(modelData) <- "Ozone"
+
+modelData <- cbind(modelData, airData$Solar.R)
+model <- glm(Ozone ~ ., data = modelData)
+
+predictions <- predict(model, newdata = modelData)
+mean_dev <- sqrt(mean((modelData$Ozone - predictions)^2))
+
+plot(modelData$Ozone ~ predictions, 
+     main="Model using only solar radiation", 
+     ylab = "Observed Ozone (ppb)", xlab="Model Ozone prediction (ppb)",
+     xlim=c(-10, 150), ylim=c(-10,150))
+abline(a=0, b=1)
+text(100,0,labels = paste("Average deviation:",round(mean_dev, digits = 1)))
+                
+```
+
+*** =right
+
+```{r echo=FALSE}
+
+library(datasets)
+airData <- airquality[complete.cases(airquality),]
+modelData <- data.frame(airData$Ozone)
+names(modelData) <- "Ozone"
+
+modelData <- cbind(modelData, airData$Solar.R)
+modelData <- cbind(modelData, airData$Wind)
+modelData <- cbind(modelData, airData$Temp)
+
+model <- glm(Ozone ~ ., data = modelData)
+
+predictions <- predict(model, newdata = modelData)
+mean_dev <- sqrt(mean((modelData$Ozone - predictions)^2))
+
+plot(modelData$Ozone ~ predictions, 
+     main="Model using solar radiation, wind and temperature", 
+     ylab = "Observed Ozone (ppb)", xlab="Model Ozone prediction (ppb)",
+     xlim=c(-10, 150), ylim=c(-10,150))
+abline(a=0, b=1)
+text(100,0,labels = paste("Average deviation:",round(mean_dev, digits = 1)))
+                
+```
+
+
+
+
+
+
